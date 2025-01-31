@@ -4,31 +4,23 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"      # Порт для AMQP
-      - "15672:15672"    # Порт для веб-интерфейса RabbitMQ
+      - "5672:5672"      
+      - "15672:15672"    
 
   server:
     build:
       context: ./api/backend/server
-      dockerfile: Dockerfile  # Указываем файл Dockerfile для сервера
+      dockerfile: Dockerfile  
     depends_on:
       - rabbitmq
-    restart: unless-stopped  # Перезапуск при сбое
-
-  client:
-    build:
-      context: ./api/backend/client
-      dockerfile: Dockerfile  # Указываем файл Dockerfile для клиента (если есть)
-    depends_on:
-      - rabbitmq
-    restart: unless-stopped  # Перезапуск при сбое
+    restart: unless-stopped  
 
   fastapi:
     build:
       context: .
-      dockerfile: Dockerfile  # Указываем файл Dockerfile для FastAPI
+      dockerfile: Dockerfile 
     depends_on:
       - rabbitmq
     ports:
-      - "8000:8000"          # Порт для FastAPI
-    restart: unless-stopped  # Перезапуск при сбое
+      - "8000:8000"          
+    restart: unless-stopped 
